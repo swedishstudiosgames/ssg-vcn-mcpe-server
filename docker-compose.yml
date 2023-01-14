@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  minecraft-bedrock-server:
+    build: .
+    container_name: minecraft-bedrock-server
+    volumes:
+      - minecraft-bedrock-server:/var/lib/minecraft-bedrock-server
+    ports:
+      - 19132:19132/udp
+    environment:
+      - CLOUDFLARE_EMAIL=your-cloudflare-email
+      - CLOUDFLARE_API_KEY=your-cloudflare-api-key
+    command: ["cloudflare-reverse-proxy", "--origin-server-certificate", "cloudflare-origin-server-certificate", "--listen", ":19132", "--upstream", "127.0.0.1:19132"]
+
+volumes:
+  minecraft-bedrock-server:
